@@ -16,7 +16,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 			coreutils \
 			shadow && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
-		apk add --no-cache --virtual-dependencies \
+		apk add --no-cache --virtual=build-dependencies \
 			curl \
 			tar \
 			tzdata \
