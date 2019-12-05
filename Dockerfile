@@ -6,7 +6,7 @@ ARG S6_OVERLAY_VERSION=v1.21.4.0
 ARG	S6_OVERLAY_ARCH=amd64
 # Package Links
 ARG BUILDER_SCRIPT=mkimage-alpine.bash
-ARG BUILDER_SCRIPT_URL=https://war.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/${BUILDER_SCRIPT}
+ARG BUILDER_SCRIPT_URL=https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/${BUILDER_SCRIPT}
 ARG S6_OVERLAY_URL=https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${S6_OVERLAY_ARCH}.tar.gz
 #Setup Base Script
 RUN	echo "##### Downloading Runtime Packages #####" && \
