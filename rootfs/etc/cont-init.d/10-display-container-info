@@ -1,0 +1,26 @@
+#!/usr/bin/with-contenv bash
+
+echo '
+-------------------------
+# USER DEFINED VARIABLES:
+-------------------------
+	$(printenv | grep -v "HOSTNAME" \
+		   | grep -v "PWD" \
+		   | grep -v "HOME" \
+		   | grep -v "TERM" \
+		   | grep -v "SHLVL" \
+		   | grep -v "PATH" \
+		   | grep -v "_")
+-------------------------
+# UID/GID of user:
+-------------------------
+UID: $(id -u user)
+GID: $(id -g user)
+-------------------------
+# FOLDER PERMISSIONS:
+-------------------------
+$(ls -ld /app)
+$(ls -ld /config)
+$(ls -ld /defaults)
+-------------------------'
+
