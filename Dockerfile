@@ -20,7 +20,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 			curl \
 			tar \
 			tzdata \
-			xz \
+			xz && \
 	echo "##### Downloading Container items via Curl #####" && \
 		echo "##### Downloading GliderLabs Builder Script #####" && \
 			curl -o /${BUILDER_SCRIPT} -L ${BUILDER_SCRIPT_URL} && \
