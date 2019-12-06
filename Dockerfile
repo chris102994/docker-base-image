@@ -8,7 +8,6 @@
 ###########
 # Pull the starting image
 FROM alpine:3.10 as rootfs-stage
-MAINTAINER chris102994<chris102994@yahoo.com>
 # Package Links
 ARG BUILDER_SCRIPT=mkimage-alpine.bash
 ARG BUILDER_SCRIPT_URL=https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/${BUILDER_SCRIPT}
@@ -79,7 +78,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		mkdir -p \
 			/app \
 			/config \
-			defaults && \
+			/defaults && \
 		groupmod -o -g 900 user && \
 		usermod -o -u 900 user && \
 	echo "##### Cleaning Up #####" && \
