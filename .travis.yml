@@ -17,11 +17,11 @@ env:
 
 before_install:
         provider: script
-        script: bash .ci/make_container.sh
+        script: bash ci/make_container.sh
         on:
                 branch: master
 deploy:
         provider: script
-        script: bash .ci/push_to_registry.sh
+        script: bash ci/push_to_registry.sh
         on:
                 branch: master
