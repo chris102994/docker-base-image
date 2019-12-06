@@ -2,8 +2,6 @@
 # Travis CI recipe to build, test and push docker images to the Docker Hub.
 #
 
-sudo: required
-
 language: generic
 
 services:
@@ -15,7 +13,7 @@ env:
   - DOCKER_NAME=docker-base-img
   - DOCKER_TAG=alpine-3.10
 
-before_install:
+script:
   - ci/make_container.sh
 
 deploy:
