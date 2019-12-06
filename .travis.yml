@@ -19,12 +19,12 @@ env:
 script:
   provider: script
   script: ci/make_container.sh
-    on:
-      branch: master
+  on:
+    branch: master
         
 deploy:
   provider: script
   script: ci/push_to_registry.sh
-    on:
-      branch: master
+  on:
+    branch: master
 
