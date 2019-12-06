@@ -4,6 +4,9 @@
 
 language: generic
 
+os:
+  - linux
+  
 services:
   - docker
 
@@ -14,8 +17,14 @@ env:
   - DOCKER_TAG=alpine-3.10
 
 script:
-  - ci/make_container.sh
-
+  - provider: script
+      script: ci/make_container.sh
+      on:
+        branch: master
+        
 deploy:
-  - ci/push_to_registry.sh
+  - provider: script
+    script: ci/push_to_registry.sh
+    on:
+      branch: master
 
