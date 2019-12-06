@@ -17,10 +17,7 @@ env:
   - DOCKER_TAG=alpine-3.10
 
 script:
-  provider: script
-  script: ci/make_container.sh
-  on:
-    branch: master
+  - ci/make_container.sh
         
 deploy:
   provider: script
