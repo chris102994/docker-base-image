@@ -1,0 +1,25 @@
+#
+# Travis CI recipe to build, test and push docker images to the Docker Hub.
+#
+
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+env:
+  global:
+  - DOCKER_REPO=christopher102994
+  - DOCKER_NAME=docker-base-img
+  - DOCKER_TAG=alpine-3.10
+
+before_install:
+  - docker build --no-cache --pull \
+    --build-arg BUILD_DATE="TODO" --build-arg VERSION="TODO" \
+    -f Dockerfile -t "$DOCKER_REPO/DOCKER_NAME-$DOCKER_TAG" .
+
+deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_USERNAME" --password-stdin
+  - docker push "$DOCKER_REPO/DOCKER_NAME-$DOCKER_TAG"
