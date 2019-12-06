@@ -16,12 +16,8 @@ env:
   - DOCKER_TAG=alpine-3.10
 
 before_install:
-        provider: script
-        script: bash ci/make_container.sh
-        on:
-                branch: master
+  - ci/make_container.sh
+
 deploy:
-        provider: script
-        script: bash ci/push_to_registry.sh
-        on:
-                branch: master
+  - ci/push_to_registry.sh
+
