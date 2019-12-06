@@ -18,8 +18,8 @@ env:
 before_install:
   - docker build --no-cache --pull \
     --build-arg BUILD_DATE="TODO" --build-arg VERSION="TODO" \
-    -f Dockerfile -t "$DOCKER_REPO/DOCKER_NAME-$DOCKER_TAG" .
+    -f Dockerfile -t "$DOCKER_REPO/$DOCKER_NAME-$DOCKER_TAG" .
 
 deploy:
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_USERNAME" --password-stdin
-  - docker push "$DOCKER_REPO/DOCKER_NAME-$DOCKER_TAG"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push "$DOCKER_REPO/$DOCKER_NAME-$DOCKER_TAG"
