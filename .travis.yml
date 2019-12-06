@@ -16,10 +16,12 @@ env:
   - DOCKER_TAG=alpine-3.10
 
 before_install:
-  - docker build --no-cache --pull \
-    --build-arg BUILD_DATE="TODO" --build-arg VERSION="TODO" \
-    -f Dockerfile -t "$DOCKER_REPO/$DOCKER_NAME-$DOCKER_TAG" .
-
+        provider: script
+        script: bash ./.ci/make_container.sh
+        on:
+                branch: master
 deploy:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push "$DOCKER_REPO/$DOCKER_NAME-$DOCKER_TAG"
+        provider: script
+        script: bash ./.ci/push_to_registry.sh
+        on:
+                branch: master
