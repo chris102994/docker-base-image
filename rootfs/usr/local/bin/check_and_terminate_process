@@ -55,11 +55,9 @@ if [ "$#" -ne 1 ] || [ -d "$1" ]; then
 	usage
 fi
 
-EXIT_CONDITION=0
-
-while [ $(get_number_of_processes $1) -ne 0 ]; do
+if [ $(get_number_of_processes $1) -ne 0 ]; then
 	terminate_kill_pid $1;
-done
+fi
 
-
+EXIT_CONDITION=$(get_number_of_processes $1)
 exit $EXIT_CONDITION
