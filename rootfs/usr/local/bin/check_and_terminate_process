@@ -43,6 +43,8 @@ terminate_kill_pid() {
 	fi
 }
 
+# Helper method that will return the number of active processes of the given one.
+# Will return 0 if none.
 get_number_of_processes(){
 	mapfile -t PIDS < <( pgrep $1 )
 	LENGTH=${#PIDS[@]}
