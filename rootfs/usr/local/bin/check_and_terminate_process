@@ -1,0 +1,65 @@
+#!/bin/bash
+
+usage() {
+	echo "usage: $(basename "$0") PROCESS_NAME
+
+Helper function that ensures that a given process name is terminated.
+If the process won't terminate then the function will kill it.
+
+This helper returns:
+	- Success: when the process given:
+		- Wasn't running.
+		- Has been successfully terminated or killed.
+	- Error: when the process given won't terminate or exit.
+	"
+	exit 1
+}
+
+
+terminate_kill_pid() {
+	EXIT_CONDITION=0
+	# Theres an instance already?
+	if [[ $(pgrep -o $1) ]]; then
+		echo "Previous instance of $1 detected. Terminating it . . ."
+		kill -15 $(pgrep -o $1) # -15 is SIGTERM
+		EXIT_CONDITION=1
+		# It shouldn't take more than 5 seconds to terminate the process
+		for i in $(seq 1 5); do
+			sleep 1
+			# Early Break condition
+			[[ $(pgrep -o $1) ]] || break
+		done
+		# The instance wasn't terminated?
+		if [[ $(pgrep -o $1) ]]; then
+			echo "Previous instance of $1 still running after 5 seconds. Killing it . . ."
+			kill -9 $(pgrep -o $1) # -9 is SIGKILL
+			sleep 1
+		fi
+		# By now the process has stopped.
+		if [[ $(pgrep -o $1) ]]; then
+			return "$?"
+		fi
+		return "$?"
+	fi
+}
+
+get_number_of_processes(){
+	mapfile -t PIDS < <( pgrep $1 )
+	LENGTH=${#PIDS[@]}
+	echo $LENGTH
+}
+
+
+# Check parameters given
+if [ "$#" -ne 1 ] || [ -d "$1" ]; then
+	usage
+fi
+
+EXIT_CONDITION=0
+
+while [ $(get_number_of_processes $1) -ne 0 ]; do
+	terminate_kill_pid $1;
+done
+
+
+exit $EXIT_CONDITION
