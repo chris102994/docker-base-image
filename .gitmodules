@@ -1,3 +1,3 @@
 [submodule "tools"]
 	path = tools
-	url = git@github.com:chris102994/common_tools.git
+	url = https://github.com/chris102994/common_tools.git

@@ -39,8 +39,7 @@ RUN	echo "##### Downloading Virtual Build Dependencies #####" && \
 			tar xf rootfs.tar.xz -C /rootfs && \
 			sed -i -e 's/^root::/root:!:/' /rootfs/etc/shadow && \
 	echo "##### Cleaning Up #####" && \
-		apk del --purge build-dependencies && \
-		rm -rf /tmp/
+		apk del --purge build-dependencies
 
 ###########
 # STAGE 2 #
@@ -82,8 +81,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		groupmod -o -g 900 user && \
 		usermod -o -u 900 user && \
 	echo "##### Cleaning Up #####" && \
-		apk del --purge build-dependencies && \
-		rm -rf /tmp/
+		apk del --purge build-dependencies
 # Add Local Files
 COPY rootfs/ /
 # This entry point is needed by s6 overlay - do not change
