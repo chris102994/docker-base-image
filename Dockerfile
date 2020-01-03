@@ -82,6 +82,8 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		usermod -o -u 900 user && \
 	echo "##### Cleaning Up #####" && \
 		apk del --purge build-dependencies
+#Work Dir
+WORKDIR /config
 # Add Local Files
 COPY rootfs/ /
 # This entry point is needed by s6 overlay - do not change
