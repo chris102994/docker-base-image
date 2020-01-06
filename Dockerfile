@@ -27,7 +27,6 @@ RUN	echo "##### Downloading Virtual Build Dependencies #####" && \
 			bash \
 			curl \
 			tar \
-			tzdata \
 			xz && \
 	echo "##### Downloading Container items via Curl #####" && \
 		echo "##### Downloading GliderLabs Builder Script #####" && \
@@ -59,6 +58,7 @@ ARG S6_OVERLAY_URL=https://github.com/just-containers/s6-overlay/releases/downlo
 RUN	echo "##### Downloading Runtime Packages #####" && \
 		apk add --no-cache \
 			bash \
+			tzdata \
 			ca-certificates \
 			coreutils \
 			shadow && \
@@ -66,7 +66,6 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		apk add --no-cache --virtual=build-dependencies \
 			curl \
 			tar \
-			tzdata \
 			xz && \
 	echo "##### Downloading S6 Overlay #####" && \
 		curl -L -s ${S6_OVERLAY_URL} | tar xvzf - -C / && \
