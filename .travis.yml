@@ -12,6 +12,9 @@ services:
 
 git:
   submodules: true
+ 
+ before_install:
+  - git submodule update --init
 
 env:
   global:
