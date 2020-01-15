@@ -10,7 +10,8 @@ $(printenv | grep -v "HOSTNAME" \
 	   | grep -v "HOME" \
 	   | grep -v "TERM" \
 	   | grep -v "SHLVL" \
-	   | grep -v "PATH")
+	   | grep -v "PATH" \
+	   | grep -v "_=")
 -------------------------
 # UID/GID of user:
 -------------------------
