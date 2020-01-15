@@ -11,10 +11,10 @@ services:
   - docker
 
 git:
-  submodules: true
+  submodules: false
  
 before_install:
-  - git submodule update --init
+  - git submodule update --init --recursive
  
 env:
   global:
