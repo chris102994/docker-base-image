@@ -13,9 +13,9 @@ services:
 git:
   submodules: true
  
- before_install:
+before_install:
   - git submodule update --init
-
+ 
 env:
   global:
   - DOCKER_REPO=christopher102994
