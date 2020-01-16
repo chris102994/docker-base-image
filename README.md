@@ -3,8 +3,7 @@
 This is a docker base image that can be used as a baseline for future containers that will be utilized for long-term deployments.
 
  [![Build Status](https://travis-ci.com/chris102994/docker-base-image.svg?branch=master)](https://travis-ci.com/chris102994/docker-base-image)
- [![Image Size](https://img.shields.io/microbadger/image-size/christopher102994/docker-base-img/alpine-3.10)](https://hub.docker.com/repository/docker/christopher102994/docker-base-img)
- [![Image Layers](https://img.shields.io/microbadger/layers/christopher102994/docker-base-img/alpine-3.10)](https://hub.docker.com/repository/docker/christopher102994/docker-base-img)
+[![Microbadger Size & Layers](https://images.microbadger.com/badges/image/christopher102994/docker-base-img.svg)](https://microbadger.com/images/christopher102994/docker-base-img "Get your own image badge on microbadger.com")
  [![Image Pulls](https://img.shields.io/docker/pulls/christopher102994/docker-base-img)](https://hub.docker.com/repository/docker/christopher102994/docker-base-img)
 
 ## **Custom Scripts**
