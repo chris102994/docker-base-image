@@ -49,6 +49,9 @@ MAINTAINER chris102994<chris102994@yahoo.com>
 COPY --from=rootfs-stage /rootfs/ /
 ARG BUILD_DATE
 ARG VERSION
+ARG VCS_REF
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/chris102994/docker-base-image"
 # Package Versions
 ARG S6_OVERLAY_VERSION=v1.21.4.0
 ARG S6_OVERLAY_ARCH=amd64
