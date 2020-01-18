@@ -1,0 +1,96 @@
+#!/bin/sh
+
+set -e # Exit on error
+
+trap : TERM QUIT INT
+trap cleanup EXIT
+
+usage() {
+    echo "usage: $(basename "$0") PKG [PKG...]"
+    exit 1
+}
+
+not_supported() {
+    echo "not_supported: $(basename "$0") doesn't support this package manager."
+    exit 1
+}
+
+cleanup() {
+    echo "Cleaning up..."
+    case "$MANAGER" in
+                    apt-get )
+                        $MANAGER -q clean
+                        rm -rf \
+                                /var/lib/apt/lists/* \
+                                /var/log/apt/* \
+                                /var/log/dpkg.log \
+                                /var/log/alternatives.log
+                        ;;
+                    apk )
+                        rm -rf \
+                                /var/cache/misc/* \
+                                /var/cache/apk/* \
+                                /var/lib/apk/*
+                        ;;
+                    *)
+                        not_supported
+                        ;;
+    esac
+}
+
+remove() {
+    echo "Removing package(s)..."
+    case "$MANAGER" in
+                    apt-get )
+                        $MANAGER -q purge -y $@
+                        $MANAGER -q --purge autoremove -y
+                        ;;
+                    apk )
+                        $MANAGER --no-cache del $@
+                        ;;
+                    *)
+                        not_supported
+                        ;;
+    esac
+}
+
+get_pkg_manager() {
+    MANAGER=
+    if [ -f "/etc/debian_version" ]; then
+        MANAGER=apt-get
+    elif [ -d "/etc/apk/" ]; then
+        MANAGER=apk
+    else
+        not_supported
+    fi
+    echo "Package Manager: $MANAGER"
+}
+
+# Main
+
+# Ensure root privileges so that not just anybody can install packages
+if [ "$(id -u)" != 0 ]; then
+    echo "This script must be run as root!"
+    exit 1
+fi
+
+# If there are no arguments given then we can't install anything ...
+if [ -z "$1" ]; then
+    usage
+fi
+
+get_pkg_manager
+
+# Parse the file to get all packages we need to remove
+PKGS_TO_REMOVE=
+for PKG in "$@"
+do
+    if [ -f /tmp/$PKG.virtual ]; then
+        PKGS_TO_REMOVE="$PKGS_TO_REMOVE $(cat /tmp/$PKG.virtual)"
+        rm /tmp/$PKG.virtual
+    else
+        PKGS_TO_REMOVE="$PKGS_TO_REMOVE $PKG"
+    fi
+done
+
+remove "$PKGS_TO_REMOVE"

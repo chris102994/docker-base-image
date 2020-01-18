@@ -47,6 +47,8 @@ RUN	echo "##### Downloading Virtual Build Dependencies #####" && \
 FROM scratch
 MAINTAINER chris102994<chris102994@yahoo.com>
 COPY --from=rootfs-stage /rootfs/ /
+# Add Local Files
+COPY rootfs/usr/local/bin/* /usr/local/bin/
 ARG BUILD_DATE
 ARG VERSION
 ARG VCS_REF
@@ -59,14 +61,14 @@ ARG S6_OVERLAY_ARCH=amd64
 ARG S6_OVERLAY_URL=https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${S6_OVERLAY_ARCH}.tar.gz
 # Setup Base Script
 RUN	echo "##### Downloading Runtime Packages #####" && \
-		apk add --no-cache \
+		install \
 			bash \
 			tzdata \
 			ca-certificates \
 			coreutils \
 			shadow && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
-		apk add --no-cache --virtual=build-dependencies \
+		install --virtual build-dependencies \
 			curl \
 			tar \
 			xz && \
@@ -83,7 +85,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		groupmod -o -g 900 user && \
 		usermod -o -u 900 user && \
 	echo "##### Cleaning Up #####" && \
-		apk del --purge build-dependencies
+		remove build-dependencies
 #Work Dir
 WORKDIR /config
 # Add Local Files
