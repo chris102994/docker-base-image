@@ -1,3 +1,28 @@
 #!/usr/bin/with-contenv bash
 
-exec /usr/sbin/crond -f -S -l 5 -c /etc/crontabs
+get_pkg_manager() {
+    MANAGER=
+    if [ -f "/etc/debian_version" ]; then
+        MANAGER=apt-get
+    elif [ -d "/etc/apk/" ]; then
+        MANAGER=apk
+    else
+        echo "not_supported: $(basename "$0") doesn't support this package manager."
+        exit 1
+    fi
+    echo "Package Manager: $MANAGER"
+}
+
+get_pkg_manager
+
+case "$MANAGER" in
+                apt-get )
+                    exec /usr/sbin/cron -f -L 4
+                    ;;
+                apk )
+					exec /usr/sbin/crond -f -S -l 5 -c /etc/crontabs
+                    ;;
+                *)
+                    ;;
+esac
+

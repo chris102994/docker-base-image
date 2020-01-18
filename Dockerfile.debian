@@ -1,7 +1,7 @@
 FROM debian:buster-slim
 MAINTAINER chris102994<chris102994@yahoo.com>
 # Add Local Files
-COPY rootfs/usr/local/bin/* /usr/local/bin/
+COPY rootfs/ /
 ARG BUILD_DATE
 ARG VERSION
 ARG VCS_REF
@@ -20,7 +20,9 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 			bash \
 			tzdata \
 			ca-certificates \
-			coreutils && \
+			coreutils \
+			procps \
+			cron && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
 		install --virtual build-dependencies \
 			curl && \
@@ -37,10 +39,9 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		groupmod -o -g 900 user && \
 		usermod -o -u 900 user && \
 	echo "##### Cleaning Up #####" && \
-		remove build-dependencies
+		rm -rf /etc/init.d && \
+		remove build-dependencies 
 #Work Dir
 WORKDIR /config
-# Add Local Files
-COPY rootfs/ /
 # This entry point is needed by s6 overlay - do not change
 ENTRYPOINT	["/init"]
