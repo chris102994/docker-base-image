@@ -23,7 +23,7 @@ jobs:
     env: 
     - DOCKER_FILE=Dockerfile.alpine 
     - BASE_IMAGE=alpine:3.10 
-    - IMAGE_TAG=ubuntu-19.04-disco
+    - IMAGE_TAG=alpine-3.10
     script: tools/scripts/make_container.sh
     deploy:
         provider: script
@@ -43,7 +43,7 @@ jobs:
     env: 
     - DOCKER_FILE=Dockerfile.debian 
     - BASE_IMAGE=ubuntu:disco-20200114 
-    - IMAGE_TAG=ubuntu-19.04-disco
+    - IMAGE_TAG=ubuntu-disco
     script: tools/scripts/make_container.sh
     deploy:
         provider: script
