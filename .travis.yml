@@ -1,5 +1,5 @@
 #
-# Travis CI recipe to build, test and push docker images to the Docker Hub.
+# Travis CI file to build, test and push docker images to the Docker Hub.
 #
 
 language: generic
@@ -12,20 +12,26 @@ services:
 
 git:
   submodules: true
- 
+
 env:
   global:
   - DOCKER_REPO=christopher102994
   - DOCKER_NAME=docker-base-img
-  - DEBIAN_TAG=debian-10
-  - ALPINE_TAG=alpine-3.10
-
-script:
-  - tools/scripts/make_container.sh
-
-deploy:
-  provider: script
-  script: tools/scripts/push_to_registry.sh
-  on:
-    branch: master
-
+jobs:
+  include:
+  - stage: Debian Container
+    env: DOCKER_FILE=Dockerfile.debian BASE_IMAGE=debian:buster-slim IMAGE_TAG=debian-10
+    script: tools/scripts/make_container.sh
+    deploy:
+        provider: script
+        script: tools/scripts/push_to_registry.sh
+  - stage: Ubuntu Container
+    env: DOCKER_FILE=Dockerfile.debian BASE_IMAGE=ubuntu:disco-20200114 IMAGE_TAG=ubuntu-19.04-disco
+    deploy:
+        provider: script
+        script: tools/scripts/push_to_registry.sh    
+  - stage: Alpine Container
+    env: DOCKER_FILE=Dockerfile.alpine BASE_IMAGE=alpine:3.10 IMAGE_TAG=ubuntu-19.04-disco
+    deploy:
+        provider: script
+        script: tools/scripts/push_to_registry.sh

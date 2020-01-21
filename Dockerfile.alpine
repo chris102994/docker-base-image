@@ -7,7 +7,8 @@
 # STAGE 1 #
 ###########
 # Pull the starting image
-FROM alpine:3.10 as rootfs-stage
+ARG BASE_IMAGE=unknown
+FROM ${BASE_IMAGE} as rootfs-stage
 # Package Links
 ARG BUILDER_SCRIPT=mkimage-alpine.bash
 ARG BUILDER_SCRIPT_URL=https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/${BUILDER_SCRIPT}
@@ -61,14 +62,14 @@ ARG S6_OVERLAY_ARCH=amd64
 ARG S6_OVERLAY_URL=https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${S6_OVERLAY_ARCH}.tar.gz
 # Setup Base Script
 RUN	echo "##### Downloading Runtime Packages #####" && \
-		install \
+		inst-pkg \
 			bash \
 			tzdata \
 			ca-certificates \
 			coreutils \
 			shadow && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
-		install --virtual build-dependencies \
+		inst-pkg --virtual build-dependencies \
 			curl \
 			tar \
 			xz && \
@@ -85,7 +86,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 		groupmod -o -g 900 user && \
 		usermod -o -u 900 user && \
 	echo "##### Cleaning Up #####" && \
-		remove build-dependencies
+		rm-pkg build-dependencies
 #Work Dir
 WORKDIR /config
 # Add Local Files
