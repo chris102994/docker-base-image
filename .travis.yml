@@ -19,6 +19,16 @@ env:
   - DOCKER_NAME=docker-base-img
 jobs:
   include:
+  - stage: Alpine Container
+    env: 
+    - DOCKER_FILE=Dockerfile.alpine 
+    - BASE_IMAGE=alpine:3.10 
+    - IMAGE_TAG=ubuntu-19.04-disco
+    script: tools/scripts/make_container.sh
+    deploy:
+        provider: script
+        script: tools/scripts/push_to_registry.sh
+        
   - stage: Debian Container
     env: 
       - DOCKER_FILE=Dockerfile.debian 
@@ -33,16 +43,6 @@ jobs:
     env: 
     - DOCKER_FILE=Dockerfile.debian 
     - BASE_IMAGE=ubuntu:disco-20200114 
-    - IMAGE_TAG=ubuntu-19.04-disco
-    script: tools/scripts/make_container.sh
-    deploy:
-        provider: script
-        script: tools/scripts/push_to_registry.sh
-
-  - stage: Alpine Container
-    env: 
-    - DOCKER_FILE=Dockerfile.alpine 
-    - BASE_IMAGE=alpine:3.10 
     - IMAGE_TAG=ubuntu-19.04-disco
     script: tools/scripts/make_container.sh
     deploy:
