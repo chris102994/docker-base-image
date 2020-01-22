@@ -48,6 +48,7 @@ install() {
                         $MANAGER install -y --no-install-recommends "$@"
                         ;;
                     apk )
+                        echo "Installing $@"
                         $MANAGER --no-cache add "$@"
                         ;;
                     *)
@@ -68,8 +69,6 @@ check_which_to_install() {
         fi
     done
 
-    PKGS_ALREADY_INSTALLED=$(echo $PKGS_ALREADY_INSTALLED | sed 's/[[:space:]]\+/ /g' )
-    PKGS_TO_INSTALL=$(echo $PKGS_TO_INSTALL | sed 's/[[:space:]]\+/ /g' )
     if [ ! -z "PKGS_ALREADY_INSTALLED" ]; then
         [ -z $(echo $PKGS_ALREADY_INSTALLED | sed 's/[[:space:]]\+//g' ) ] || echo "Already installed: $PKGS_ALREADY_INSTALLED"
     fi
@@ -163,6 +162,6 @@ fi
 
 # Try to install
 if [ ! -z "$PKGS_TO_INSTALL" ]; then 
-    install "$PKGS_TO_INSTALL"
+    install "$@"
     check_installed "$PKGS_TO_INSTALL"
 fi
