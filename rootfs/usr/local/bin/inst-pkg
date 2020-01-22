@@ -42,7 +42,9 @@ install() {
     echo "Installing package(s)..."
     case "$MANAGER" in
                     apt-get )
-                        $MANAGER -q update
+                        echo "Updating packages. . . "
+                        $MANAGER -q update 
+                        echo "Installing $@"
                         $MANAGER install -y --no-install-recommends "$@"
                         ;;
                     apk )
@@ -54,14 +56,35 @@ install() {
     esac
 }
 
-check_installed() {
-    echo "Ensuring that everything was installed"
-    UNINSTALLED_PKGS=
-    echo "$@"
+check_which_to_install() {
+    PKGS_TO_INSTALL=
+    PKGS_ALREADY_INSTALLED=
     for PKG in "$@"
     do
         if ! check_individual_install $PKG; then
-            $UNINSTALLED_PKGS="$UNINSTALLED_PKGS $PKG"
+            PKGS_TO_INSTALL="$PKGS_TO_INSTALL $PKG"
+        else
+            PKGS_ALREADY_INSTALLED="$PKGS_ALREADY_INSTALLED $PKG"
+        fi
+    done
+
+    PKGS_ALREADY_INSTALLED=$(echo $PKGS_ALREADY_INSTALLED | sed 's/[[:space:]]\+/ /g' )
+    PKGS_TO_INSTALL=$(echo $PKGS_TO_INSTALL | sed 's/[[:space:]]\+/ /g' )
+    if [ ! -z "PKGS_ALREADY_INSTALLED" ]; then
+        [ -z $(echo $PKGS_ALREADY_INSTALLED | sed 's/[[:space:]]\+//g' ) ] || echo "Already installed: $PKGS_ALREADY_INSTALLED"
+    fi
+    if [ ! -z "PKGS_TO_INSTALL" ]; then
+        [ -z $(echo $PKGS_TO_INSTALL | sed 's/[[:space:]]\+//g' ) ] || echo "To be installed: $PKGS_TO_INSTALL"
+    fi
+}
+
+check_installed() {
+    echo "Ensuring that everything was installed"
+    UNINSTALLED_PKGS=
+    for PKG in "$*"
+    do
+        if ! check_individual_install $PKG; then
+            UNINSTALLED_PKGS="$UNINSTALLED_PKGS $PKG"
         fi
     done
 
@@ -132,10 +155,14 @@ if [ "$1" = "--virtual" ]; then
         echo "ERROR: Virtual Package '$VIRTUAL_PKG' already exists..."
         exit 1
     fi
-    echo "$*" >> /tmp/$VIRTUAL_PKG.virtual
+    check_which_to_install "$@"
+    echo "$PKGS_TO_INSTALL" >> /tmp/$VIRTUAL_PKG.virtual
+else
+    check_which_to_install "$@"
 fi
 
-# Try to install everything
-install "$@"
-
-check_installed "$@"
+# Try to install
+if [ ! -z "$PKGS_TO_INSTALL" ]; then 
+    install "$PKGS_TO_INSTALL"
+    check_installed "$PKGS_TO_INSTALL"
+fi

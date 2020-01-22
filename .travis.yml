@@ -42,8 +42,8 @@ jobs:
   - stage: Ubuntu Container
     env: 
     - DOCKER_FILE=Dockerfile.debian 
-    - BASE_IMAGE=ubuntu:disco-20200114 
-    - IMAGE_TAG=ubuntu-disco
+    - BASE_IMAGE=ubuntu:bionic-20200112
+    - IMAGE_TAG=ubuntu-bionic
     script: tools/scripts/make_container.sh
     deploy:
         provider: script
