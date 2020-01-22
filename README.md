@@ -7,6 +7,7 @@ This is a docker base image that can be used as a baseline for future containers
  [![Image Pulls](https://img.shields.io/docker/pulls/christopher102994/docker-base-img)](https://hub.docker.com/repository/docker/christopher102994/docker-base-img)
  [![Alpine](https://images.microbadger.com/badges/version/christopher102994/docker-base-img.svg)](https://microbadger.com/images/christopher102994/docker-base-img "Get your own version badge on microbadger.com")
  [![Debian](https://images.microbadger.com/badges/version/christopher102994/docker-base-img:debian-10.svg)](https://microbadger.com/images/christopher102994/docker-base-img:debian-10 "Get your own version badge on microbadger.com")
+  [![Ubuntu](https://images.microbadger.com/badges/version/christopher102994/docker-base-img:ubuntu-bionic.svg)](https://microbadger.com/images/christopher102994/docker-base-img:ubuntu-bionic "Get your own version badge on microbadger.com")
 
 ## **Custom Scripts**
 * [/usr/local/bin](https://github.com/chris102994/docker-base-image/tree/master/rootfs/usr/local/bin)
