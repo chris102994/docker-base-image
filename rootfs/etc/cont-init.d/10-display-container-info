@@ -2,6 +2,10 @@
 
 echo "
 -------------------------
+# SYSTEM INFO:
+-------------------------
+$(neofetch)
+-------------------------
 # USER DEFINED VARIABLES:
 -------------------------
 $(printenv | grep -v "HOSTNAME" \

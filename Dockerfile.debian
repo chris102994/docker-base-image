@@ -26,7 +26,8 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 			cron && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
 		inst-pkg --virtual build-dependencies \
-			curl && \
+			curl \
+			neofetch && \
 	echo "##### Downloading S6 Overlay #####" && \
 		curl -L -s ${S6_OVERLAY_URL} | tar xvzf - -C / && \
 	echo "##### Creating user and folders #####" && \
