@@ -23,11 +23,11 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 			ca-certificates \
 			coreutils \
 			procps \
-			cron && \
+			cron \
+			neofetch && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
 		inst-pkg --virtual build-dependencies \
-			curl \
-			neofetch && \
+			curl && \
 	echo "##### Downloading S6 Overlay #####" && \
 		curl -L -s ${S6_OVERLAY_URL} | tar xvzf - -C / && \
 	echo "##### Creating user and folders #####" && \
