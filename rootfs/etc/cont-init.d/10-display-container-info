@@ -11,6 +11,8 @@ $(printenv | grep -v "HOSTNAME" \
 	   | grep -v "TERM" \
 	   | grep -v "SHLVL" \
 	   | grep -v "PATH" \
+	   | grep -v "URL" \
+	   | grep -v "VER" \
 	   | grep -v "_=")
 -------------------------
 # UID/GID of user:
