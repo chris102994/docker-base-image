@@ -67,8 +67,7 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 			tzdata \
 			ca-certificates \
 			coreutils \
-			shadow \
-			neofetch && \
+			shadow && \
 	echo "##### Downloading Virtual Build Dependencies #####" && \
 		inst-pkg --virtual build-dependencies \
 			curl \
