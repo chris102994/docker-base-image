@@ -21,8 +21,10 @@ env:
 jobs:
   include:
   - stage: Alpine Container
+    env:
+      - VERSION_FILE=versions/alpine-3.10.env
     script:
-      - source versions/alpine-3.10.env
+      - source tools/scripts/load_env_files.sh $VERSION_FILE
       - source tools/scripts/versioning.sh 
       - tools/scripts/make_container.sh
     deploy:
@@ -30,8 +32,10 @@ jobs:
         script: tools/scripts/push_to_registry.sh
         
   - stage: Debian Container
+    env:
+      - VERSION_FILE=versions/debian-10.env
     script:
-      - source versions/debian-10.env
+      - source tools/scripts/load_env_files.sh $VERSION_FILE
       - source tools/scripts/versioning.sh 
       - tools/scripts/make_container.sh
     deploy:
@@ -39,8 +43,10 @@ jobs:
         script: tools/scripts/push_to_registry.sh
 
   - stage: Ubuntu Container
+    env:
+      - VERSION_FILE=versions/ubuntu-18.env
     script:
-      - source versions/ubuntu-18.env
+      - source tools/scripts/load_env_files.sh $VERSION_FILE
       - source tools/scripts/versioning.sh 
       - tools/scripts/make_container.sh
     deploy:
