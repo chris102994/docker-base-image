@@ -21,11 +21,8 @@ env:
 jobs:
   include:
   - stage: Alpine Container
-    env: 
-    - DOCKER_FILE=Dockerfile.alpine 
-    - BASE_IMAGE=alpine:3.10 
-    - IMAGE_TAG=alpine-3.10
     script:
+      - source versions/alpine-3.10.env
       - source tools/scripts/versioning.sh 
       - tools/scripts/make_container.sh
     deploy:
@@ -33,11 +30,8 @@ jobs:
         script: tools/scripts/push_to_registry.sh
         
   - stage: Debian Container
-    env: 
-      - DOCKER_FILE=Dockerfile.debian 
-      - BASE_IMAGE=debian:buster-slim 
-      - IMAGE_TAG=debian-10
     script:
+      - source versions/debian-10.env
       - source tools/scripts/versioning.sh 
       - tools/scripts/make_container.sh
     deploy:
@@ -45,11 +39,8 @@ jobs:
         script: tools/scripts/push_to_registry.sh
 
   - stage: Ubuntu Container
-    env: 
-      - DOCKER_FILE=Dockerfile.debian 
-      - BASE_IMAGE=ubuntu:bionic-20200112
-      - IMAGE_TAG=ubuntu-bionic
     script:
+      - source versions/ubuntu-18.env
       - source tools/scripts/versioning.sh 
       - tools/scripts/make_container.sh
     deploy:
