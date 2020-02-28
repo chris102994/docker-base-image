@@ -58,15 +58,9 @@ jobs:
 
   - stage: Git Tag
     before_deploy:
-      - git config --local user.name $GIT_USERNAME
-      - git config --local user.emial $GIT_EMAIL
       - source tools/scripts/versioning.sh
-      - git tag $GIT_TAG
+      - git tag $GIT_VERSION
     deploy:
-        provider: releases
-        api_key: $GIT_TOKEN
-        on:
-          condition: $PUSH_TAG = true
-          branches:
-            only:
-              - master
+        provider: script
+        script: tools/scripts/push_git_tag.sh
+
