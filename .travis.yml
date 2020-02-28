@@ -57,10 +57,9 @@ jobs:
         script: tools/scripts/push_to_registry.sh
 
   - stage: Git Tag
-    before_deploy:
-      - source tools/scripts/versioning.sh
-      - git tag $GIT_VERSION
     deploy:
         provider: script
-        script: tools/scripts/push_git_tag.sh
+        script: 
+          - source tools/scripts/versioning.sh
+          - tools/scripts/push_git_tag.sh
 
