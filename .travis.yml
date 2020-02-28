@@ -63,5 +63,10 @@ jobs:
       - source tools/scripts/versioning.sh
       - git tag $GIT_TAG
     deploy:
-        provider: script
-        script: tools/scripts/push_to_registry.sh
+        provider: releases
+        api_key: $GIT_TOKEN
+        on:
+          condition: $PUSH_TAG = true
+          branches:
+            only:
+              - master
