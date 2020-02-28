@@ -60,4 +60,3 @@ jobs:
     script: 
       - source tools/scripts/versioning.sh
       - tools/scripts/push_git_tag.sh
-
