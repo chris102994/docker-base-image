@@ -48,6 +48,7 @@ jobs:
   - stage: Git Tag & Docker Hub README
     script: 
       - git submodule update --init --recursive
+      - source tools/scripts/load_env_files.sh versions/docker-base-image.env 
       - source tools/scripts/versioning.sh
       - tools/scripts/push_git_tag.sh
       - tools/scripts/push_readme_to_dockerhub.sh
