@@ -51,5 +51,5 @@ jobs:
       - |
         tools/build/build_container.sh \
         -e versions/docker-base-image.env \
-        -pg true \
-        -pr true
+        -g true \
+        -r true
