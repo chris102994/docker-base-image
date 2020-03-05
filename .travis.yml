@@ -18,7 +18,8 @@ jobs:
   - stage: Alpine Container
     script:
       - git submodule update --init --recursive
-      - tools/build/build_container.sh \
+      - |
+        tools/build/build_container.sh \
         -e versions/alpine-3.10.env \
         -e versions/docker-base-image.env \
         -b true \
