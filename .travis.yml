@@ -27,7 +27,8 @@ jobs:
   - stage: Debian Container
     script:
       - git submodule update --init --recursive
-      - tools/build/build_container.sh \
+      - |
+        tools/build/build_container.sh \
         -e versions/debian-10.env \
         -e versions/docker-base-image.env \
         -b true \
@@ -36,7 +37,8 @@ jobs:
   - stage: Ubuntu Container
     script:
       - git submodule update --init --recursive
-      - tools/build/build_container.sh \
+      - |
+        tools/build/build_container.sh \
         -e versions/ubuntu-18.env \
         -e versions/docker-base-image.env \
         -b true \
@@ -45,7 +47,8 @@ jobs:
   - stage: Git Tag & Docker Hub README
     script: 
       - git submodule update --init --recursive
-      - tools/build/build_container.sh \
+      - |
+        tools/build/build_container.sh \
         -e versions/docker-base-image.env \
         -pg true \
         -pr true
