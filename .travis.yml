@@ -17,7 +17,7 @@ jobs:
   include:
   - stage: Alpine Container
     script:
-      - git submodule update --init --recursive
+      - git submodule update --init --remote
       - |
         tools/build/build_container.sh \
         -e versions/alpine-3.10.env \
@@ -27,7 +27,7 @@ jobs:
         
   - stage: Debian Container
     script:
-      - git submodule update --init --recursive
+      - git submodule update --init --remote
       - |
         tools/build/build_container.sh \
         -e versions/debian-10.env \
@@ -37,7 +37,7 @@ jobs:
 
   - stage: Ubuntu Container
     script:
-      - git submodule update --init --recursive
+      - git submodule update --init --remote
       - |
         tools/build/build_container.sh \
         -e versions/ubuntu-18.env \
@@ -47,7 +47,7 @@ jobs:
 
   - stage: Git Tag & Docker Hub README
     script: 
-      - git submodule update --init --recursive
+      - git submodule update --init --remote
       - |
         tools/build/build_container.sh \
         -e versions/docker-base-image.env \
