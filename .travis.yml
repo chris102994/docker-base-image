@@ -53,3 +53,4 @@ jobs:
         -e versions/docker-base-image.env \
         -g true \
         -r true
+
