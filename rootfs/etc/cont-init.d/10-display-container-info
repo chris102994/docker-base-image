@@ -5,20 +5,20 @@ echo "
 # USER DEFINED VARIABLES:
 -------------------------
 $(printenv | grep -v "HOSTNAME" \
-	   | grep -v "PWD" \
-	   | grep -v "CWD" \
-	   | grep -v "HOME" \
-	   | grep -v "TERM" \
-	   | grep -v "SHLVL" \
-	   | grep -v "PATH" \
-	   | grep -v "URL" \
-	   | grep -v "VER" \
-	   | grep -v "_=")
+		   | grep -v "PWD" \
+		   | grep -v "CWD" \
+		   | grep -v "HOME" \
+		   | grep -v "TERM" \
+		   | grep -v "SHLVL" \
+		   | grep -v "PATH" \
+		   | grep -v "URL" \
+		   | grep -v "VER" \
+		   | grep -v "_=")
 -------------------------
-# UID/GID of user:
+# UID/GID of $USERNAME:
 -------------------------
-UID: $(id -u user)
-GID: $(id -g user)
+UID: $(id -u $USERNAME)
+GID: $(id -g $USERNAME)
 -------------------------
 # FOLDER PERMISSIONS:
 -------------------------

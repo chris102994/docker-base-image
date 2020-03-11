@@ -22,3 +22,25 @@ This is a docker base image that can be used as a baseline for future containers
 * [Glider Labs rootfs Builder](https://github.com/gliderlabs/docker-alpine/tree/master/builder)
 * [S6 Overlay](https://github.com/just-containers/s6-overlay) 
     * [Further Documentation](https://github.com/just-containers/s6-overlay/blob/master/README.md)
+
+## Docker
+```
+docker run \
+	--name=base-image \
+	-e PUID=1000 `Optional` \
+	-e PGID=1000 `Optional` \
+	-v </path/to/appdata/config>:/config \
+	--restart unless-stopped \
+	christopher102994/docker-base-image:alpine-3.10-latest
+```
+
+## Parameters
+Container specific parameters passed at runtime. The format is `<external>:<internal>` (e.g. `-p 443:22` maps the container's port 22 to the host's port 443).
+
+| Parameter | Function |
+| -------- | -------- |
+| -e USERNAME | The Username you wish to run as. (Optional) |
+| -e GROUPNAME | The Groupname you wish to run as. (Optional) |
+| -e PUID | The UID you wish to run and save files as. (Optional) |
+| -e PGID | The GID you wish to run and save files as. (Optional) |
+| -v /config | All the config files for your app. |

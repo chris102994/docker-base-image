@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bash
+
+export USERNAME=${USERNAME:-user}
+export GROUPNAME=${GROUPNAME:-$USERNAME}
+export PUID=${PUID:-900}
+export PGID=${PGID:-900}
+
+if [ "$USERNAME" != "user" ]; then
+	usermod -l $USERNAME user
+fi
+
+if [ "$GROUPNAME" != "user" ]; then
+	groupmod -n $GROUPNAME user
+fi
+
+usermod -o -u "$PUID" "$USERNAME"
+groupmod -o -g "$PGID" "$GROUPNAME"

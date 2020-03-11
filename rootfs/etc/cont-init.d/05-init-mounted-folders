@@ -8,8 +8,6 @@ DATA_PATH='/config/data'
 if [ ! -d $DATA_PATH ]; then
 	echo "First boot with mounted /config/data detected."
 	mkdir -p $DATA_PATH
-	chown -R 900:900 $DATA_PATH
-	chmod -R 0755 $DATA_PATH
 fi
 
 
@@ -18,6 +16,12 @@ LOG_PATH='/config/log'
 if [ ! -d $LOG_PATH ]; then
 	echo "First boot with mounted /config/log detected."
 	mkdir -p $LOG_PATH
-	chown -R 900:900 $LOG_PATH
-	chmod -R 0755 $LOG_PATH
 fi
+
+chown -R $USERNAME:$GROUPNAME /app
+chown -R $USERNAME:$GROUPNAME /config
+chown -R $USERNAME:$GROUPNAME /defaults
+
+chmod -R 0755 /app
+chmod -R 0755 /config
+chmod -R 0755 /defaults
