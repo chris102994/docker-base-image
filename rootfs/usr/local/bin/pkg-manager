@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e # Exit on error
+
+not_supported() {
+    log $(basename $0) "not_supported: $(basename "$0") doesn't support this package manager."
+    exit 1
+}
+
+get_pkg_manager() {
+    MANAGER=
+    if [ -f "/etc/debian_version" ]; then
+        MANAGER=apt-get
+    elif [ -d "/etc/apk/" ]; then
+        MANAGER=apk
+    else
+        not_supported
+    fi
+    log $(basename $0) "The Package Manager is $MANAGER"
+}
+
+get_pkg_manager
+export MANAGER=$MANAGER

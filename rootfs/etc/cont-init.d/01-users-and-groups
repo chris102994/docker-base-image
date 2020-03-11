@@ -6,10 +6,12 @@ export PUID=${PUID:-900}
 export PGID=${PGID:-900}
 
 if [ "$USERNAME" != "user" ]; then
+	log $(basename $0) "Changing user 'user' to $USERNAME"
 	usermod -l $USERNAME user
 fi
 
 if [ "$GROUPNAME" != "user" ]; then
+	log $(basename $0) "Changing group 'user' to $GROUPNAME"
 	groupmod -n $GROUPNAME user
 fi
 

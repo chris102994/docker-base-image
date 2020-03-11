@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e # Exit on error
+
+usage(){
+        echo "usage: logname \$(basename \$0) MESSAGE..."
+        exit 1
+}
+
+# Ensure we have a named log.
+if [ $# -lt 2 ]; then
+        usage
+fi
+
+CALLER=$1
+shift
+echo "[$CALLER]: $*"

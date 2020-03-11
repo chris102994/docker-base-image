@@ -6,20 +6,20 @@ trap : TERM QUIT INT
 trap cleanup EXIT
 
 usage() {
-    echo "usage: $(basename "$0") PKG [PKG...]"
+    log $(basename $0) "usage: $(basename "$0") PKG [PKG...]"
     exit 1
 }
 
 not_supported() {
-    echo "not_supported: $(basename "$0") doesn't support this package manager."
+    log $(basename $0) "not_supported: $(basename "$0") doesn't support this package manager."
     exit 1
 }
 
 cleanup() {
-    echo "Cleaning up..."
+    log $(basename $0) "Cleaning up..."
     case "$MANAGER" in
                     apt-get )
-                        $MANAGER -q clean
+                        apt-get -q clean
                         rm -rf \
                                 /var/lib/apt/lists/* \
                                 /var/log/apt/* \
@@ -39,14 +39,14 @@ cleanup() {
 }
 
 remove() {
-    echo "Removing package(s)..."
+    log $(basename $0) "Removing package(s) $@"
     case "$MANAGER" in
                     apt-get )
-                        $MANAGER -q purge -y $@
-                        $MANAGER -q --purge autoremove -y
+                        apt-get -q purge -y $@
+                        apt-get -q --purge autoremove -y
                         ;;
                     apk )
-                        $MANAGER --no-cache del $@
+                        apk --no-cache del $@
                         ;;
                     *)
                         not_supported
@@ -54,23 +54,11 @@ remove() {
     esac
 }
 
-get_pkg_manager() {
-    MANAGER=
-    if [ -f "/etc/debian_version" ]; then
-        MANAGER=apt-get
-    elif [ -d "/etc/apk/" ]; then
-        MANAGER=apk
-    else
-        not_supported
-    fi
-    echo "Package Manager: $MANAGER"
-}
-
 # Main
 
 # Ensure root privileges so that not just anybody can install packages
 if [ "$(id -u)" != 0 ]; then
-    echo "This script must be run as root!"
+    log $(basename $0) "This script must be run as root!"
     exit 1
 fi
 
@@ -79,7 +67,7 @@ if [ -z "$1" ]; then
     usage
 fi
 
-get_pkg_manager
+. pkg-manager
 
 # Parse the file to get all packages we need to remove
 PKGS_TO_REMOVE=

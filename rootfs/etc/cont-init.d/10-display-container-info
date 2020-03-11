@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-echo "
+log $(basename $0) "
 -------------------------
 # USER DEFINED VARIABLES:
 -------------------------

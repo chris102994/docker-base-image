@@ -1,19 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-get_pkg_manager() {
-    MANAGER=
-    if [ -f "/etc/debian_version" ]; then
-        MANAGER=apt-get
-    elif [ -d "/etc/apk/" ]; then
-        MANAGER=apk
-    else
-        echo "not_supported: $(basename "$0") doesn't support this package manager."
-        exit 1
-    fi
-    echo "Package Manager: $MANAGER"
-}
-
-get_pkg_manager
+. pkg-manager
 
 case "$MANAGER" in
                 apt-get )

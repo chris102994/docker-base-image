@@ -61,9 +61,11 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 ARG PUID=900
 ARG PGID=900
 ARG USERNAME=user
+ARG GROUPNAME=$USERNAME
 ENV PUID=$PUID
 ENV PGID=$PGID
 ENV USERNAME=$USERNAME
+ENV GROUPNAME=$USERNAME
 # Package Versions
 ARG S6_OVERLAY_VERSION=v1.21.4.0
 ARG S6_OVERLAY_ARCH=amd64
@@ -85,12 +87,12 @@ RUN	echo "##### Downloading Runtime Packages #####" && \
 	echo "##### Downloading S6 Overlay #####" && \
 		curl -L -s ${S6_OVERLAY_URL} | tar xvzf - -C / && \
 	echo "##### Creating user and folders #####" && \
-		useradd -u ${PUID} -U -d /config -s /bin/false ${USERNAME} && \
-		usermod -G ${USERNAME} ${USERNAME} && \
 		mkdir -p \
 			/app \
 			/config \
 			/defaults && \
+		useradd -u ${PUID} -U -d /config -s /bin/false ${USERNAME} && \
+		usermod -G ${USERNAME} ${USERNAME} && \
 		groupmod -o -g ${PGID} ${USERNAME}  && \
 		usermod -o -u ${PUID} ${USERNAME} && \
 	echo "##### Cleaning Up #####" && \

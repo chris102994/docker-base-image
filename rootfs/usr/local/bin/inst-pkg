@@ -6,17 +6,17 @@ trap : TERM QUIT INT
 trap cleanup EXIT
 
 usage() {
-    echo "usage: $(basename "$0") [--virtual NAME ] PKG [PKG...]"
+    log $(basename $0) "usage: $(basename "$0") [--virtual NAME ] PKG [PKG...]"
     exit 1
 }
 
 not_supported() {
-    echo "not_supported: $(basename "$0") doesn't support this package manager."
+    log $(basename $0) "not_supported: $(basename "$0") doesn't support this package manager."
     exit 1
 }
 
 cleanup() {
-    echo "Cleaning up..."
+    log $(basename $0) "Cleaning up..."
     case "$MANAGER" in
                     apt-get )
                         $MANAGER -q clean
@@ -39,17 +39,17 @@ cleanup() {
 }
 
 install() {
-    echo "Installing package(s)..."
+    log $(basename $0) "Installing package(s)..."
     case "$MANAGER" in
                     apt-get )
-                        echo "Updating packages. . . "
-                        $MANAGER -q update 
-                        echo "Installing $@"
-                        $MANAGER install -y --no-install-recommends "$@"
+                        log $(basename $0) "Updating packages. . . "
+                        apt-get -q update 
+                        log $(basename $0) "Installing $@"
+                        apt-get install -y --no-install-recommends "$@"
                         ;;
                     apk )
-                        echo "Installing $@"
-                        $MANAGER --no-cache add "$@"
+                        log $(basename $0) "Installing $@"
+                        apk --no-cache add "$@"
                         ;;
                     *)
                         not_supported
@@ -70,15 +70,15 @@ check_which_to_install() {
     done
 
     if [ ! -z "PKGS_ALREADY_INSTALLED" ]; then
-        [ -z $(echo $PKGS_ALREADY_INSTALLED | sed 's/[[:space:]]\+//g' ) ] || echo "Already installed: $PKGS_ALREADY_INSTALLED"
+        [ -z $(echo $PKGS_ALREADY_INSTALLED | sed 's/[[:space:]]\+//g' ) ] || log $(basename $0) "Already installed: $PKGS_ALREADY_INSTALLED"
     fi
     if [ ! -z "PKGS_TO_INSTALL" ]; then
-        [ -z $(echo $PKGS_TO_INSTALL | sed 's/[[:space:]]\+//g' ) ] || echo "To be installed: $PKGS_TO_INSTALL"
+        [ -z $(echo $PKGS_TO_INSTALL | sed 's/[[:space:]]\+//g' ) ] || log $(basename $0) "To be installed: $PKGS_TO_INSTALL"
     fi
 }
 
 check_installed() {
-    echo "Ensuring that everything was installed"
+    log $(basename $0) "Ensuring that everything was installed"
     UNINSTALLED_PKGS=
     for PKG in "$*"
     do
@@ -88,10 +88,10 @@ check_installed() {
     done
 
     if [ -z "$UNINSTALLED_PKGS" ]; then
-        echo "Successfully installed: $@"
+        log $(basename $0) "Successfully installed: $@"
     else
         # Ensure that a failure code is returned if we couldn't install everything.
-        echo "The following packages couldn't be installed: $UNINSTALLED_PKGS"
+        log $(basename $0) "The following packages couldn't be installed: $UNINSTALLED_PKGS"
         exit 1
     fi
 }
@@ -102,7 +102,7 @@ check_individual_install() {
                         dpkg --status "$1" 2>&1 | grep -q "^Status: install ok installed"
                         ;;
                     apk )
-                        $MANAGER info 2>/dev/null | grep -q "^$1\$"
+                        apk info 2>/dev/null | grep -q "^$1\$"
                         ;;
                     *)
                         not_supported
@@ -110,24 +110,11 @@ check_individual_install() {
     esac
 }
 
-get_pkg_manager() {
-    MANAGER=
-    if [ -f "/etc/debian_version" ]; then
-        MANAGER=apt-get
-    elif [ -d "/etc/apk/" ]; then
-        MANAGER=apk
-    else
-        not_supported
-    fi
-    echo "Package Manager: $MANAGER"
-}
-
-
 # Main
 
 # Ensure root privileges so that not just anybody can install packages
 if [ "$(id -u)" != 0 ]; then
-    echo "This script must be run as root!"
+    log $(basename $0) "This script must be run as root!"
     exit 1
 fi
 
@@ -136,7 +123,7 @@ if [ -z "$1" ]; then
     usage
 fi
 
-get_pkg_manager
+. pkg-manager
 
 # If this is virtual then we want to capture that
 VIRTUAL_PKG=
@@ -144,14 +131,14 @@ if [ "$1" = "--virtual" ]; then
     shift
     # If there are no packages given then we can't install anything ...
     if [ -z "$1" ]; then
-        echo "No virtual packages listed..."
+        log $(basename $0) "No virtual packages listed..."
         usage
     fi
     VIRTUAL_PKG="$1"
     shift
-    echo "Package Group Name: $VIRTUAL_PKG"
+    log $(basename $0) "Package Group Name: $VIRTUAL_PKG"
     if [ -f /tmp/$VIRTUAL_PKG.virtual ]; then
-        echo "ERROR: Virtual Package '$VIRTUAL_PKG' already exists..."
+        log $(basename $0) "ERROR: Virtual Package '$VIRTUAL_PKG' already exists..."
         exit 1
     fi
     check_which_to_install "$@"
