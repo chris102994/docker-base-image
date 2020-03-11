@@ -11,6 +11,10 @@ This is a docker base image that can be used as a baseline for future containers
 
 ## **Custom Scripts**
 * [/usr/local/bin](https://github.com/chris102994/docker-base-image/tree/master/rootfs/usr/local/bin)
+  * [log](https://github.com/chris102994/docker-base-image/blob/master/rootfs/usr/local/bin/log) - This is used to print neat messages out to the docker console.
+    * Usage: `log $(basename $0) MESSAGE...` 
+  * [pkg-manager](https://github.com/chris102994/docker-base-image/blob/master/rootfs/usr/local/bin/pkg-manager) - This is used by `inst-pkg` and `rm-pkg` to get the package manager.
+    * Usage: `. pkg-manager` which then sets the `$MANAGER` env variable in the calling script.
   * [inst-pkg](https://github.com/chris102994/docker-base-image/blob/master/rootfs/usr/local/bin/inst-pkg) - This is a install script which allows me to use common syntax across debian and alpine images. It's especially handy since apt-get doesn't include the nice `--virtual` tag that apk does to easily install build dependencies not needed for further use.
     * Usage: `inst-pkg [--virtual NAME ] PKG [PKG...]`
   * [rm-pkg](https://github.com/chris102994/docker-base-image/blob/master/rootfs/usr/local/bin/rm-pkg) - This is a remove script which allows me to use common syntax across debian and alpine images. It's especially handy since apt-get doesn't include the nice `--virtual` tag that apk does to easily remove build dependencies not needed for further use.
