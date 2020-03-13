@@ -3,7 +3,7 @@
 set -e # Exit on error
 
 usage(){
-        echo "usage: logname \$(basename \$0) MESSAGE..."
+        echo "usage: $(basename "$0") \$(basename \$0) MESSAGE..."
         exit 1
 }
 
