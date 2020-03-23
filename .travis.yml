@@ -45,6 +45,14 @@ jobs:
         --build \
         --pushdr
 
+  - stage: Docker Testing
+    script: 
+      - git submodule update --init --remote
+      - |
+        tools/build/build_container.sh \
+        --envfile versions/docker-base-image.env \
+        --testc
+
   - stage: Git Tag & Docker Hub README
     script: 
       - git submodule update --init --remote
