@@ -2,13 +2,16 @@
 ## [chris102994/docker-base-image](https://github.com/chris102994/docker-base-image)
 
 This is a docker base image that can be used as a baseline for future containers that will be utilized for long-term deployments.
-
+### CI
  [![Build Status](https://travis-ci.com/chris102994/docker-base-image.svg?branch=master)](https://travis-ci.com/chris102994/docker-base-image "Build Status")
-[![Microbadger Size & Layers](https://images.microbadger.com/badges/image/christopher102994/docker-base-image.svg)](https://microbadger.com/images/christopher102994/docker-base-image "Image Size")
- [![Image Pulls](https://img.shields.io/docker/pulls/christopher102994/docker-base-image)](https://hub.docker.com/repository/docker/christopher102994/docker-base-image "Docker Hub Info")
- [![Alpine](https://images.microbadger.com/badges/version/christopher102994/docker-base-image:alpine-3.10-latest.svg)](https://microbadger.com/images/christopher102994/docker-base-image:alpine-3.10-latest "Alpine Image")
- [![Debian](https://images.microbadger.com/badges/version/christopher102994/docker-base-image:debian-10-latest.svg)](https://microbadger.com/images/christopher102994/docker-base-image:debian-10-latest "Debian Image")
- [![Ubuntu](https://images.microbadger.com/badges/version/christopher102994/docker-base-image:ubuntu-18-latest.svg)](https://microbadger.com/images/christopher102994/docker-base-image:ubuntu-18-latest "Ubuntu Image")
+  [![Image Pulls](https://img.shields.io/docker/pulls/christopher102994/docker-base-image)](https://hub.docker.com/repository/docker/christopher102994/docker-base-image "Docker Hub Info")
+[![GitHub tag Version](https://img.shields.io/github/v/tag/chris102994/docker-base-image?label=Version&style=plastic)](https://chris102994.github.io/containers/docker-base-image/)
+## Images
+|Base Distribution|Tag|Size|
+|-----|-----|-----|
+| Ubuntu Bionic (18) | ubuntu-18-latest |[![](https://images.microbadger.com/badges/image/christopher102994/docker-base-image:ubuntu-18-latest.svg)](https://microbadger.com/images/christopher102994/docker-base-image:ubuntu-18-latest "Image Size") |
+| Alpine 3.10 | alpine-3.10-latest |[![](https://images.microbadger.com/badges/image/christopher102994/docker-base-image:alpine-3.10-latest.svg)](https://microbadger.com/images/christopher102994/docker-base-image:alpine-3.10-latest "Image Size") |
+| Debian Bullseye (11) | debian-11-latest |[![](https://images.microbadger.com/badges/image/christopher102994/docker-base-image:debian-11-latest.svg)](https://microbadger.com/images/christopher102994/docker-base-image:debian-11-latest "Image Size") |
 
 ## **Custom Scripts**
 * [/usr/local/bin](https://github.com/chris102994/docker-base-image/tree/master/rootfs/usr/local/bin)
